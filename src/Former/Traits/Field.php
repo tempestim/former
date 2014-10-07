@@ -343,7 +343,11 @@ abstract class Field extends FormerObject implements FieldInterface
 
 		// Assign a priority to each
 		if (!is_null($post)) {
-			return e($post);
+			return is_array($post) ?
+				array_walk($post, function(&$value, $key){
+					$value = e($value);
+				}) :
+				e($post);
 		}
 		if (!is_null($populate)) {
 			return $populate;

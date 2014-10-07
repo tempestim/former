@@ -256,6 +256,16 @@ class RadioTest extends FormerTests
 		$this->assertEquals($matcher, $radios);
 	}
 
+	public function testRepopulateFromPostOtherValue()
+	{
+		$this->request->shouldReceive('input')->andReturn(2);
+
+		$radios  = $this->former->radios('foo')->radios('foo', 'bar')->__toString();
+		$matcher = $this->controlGroup($this->matchRadio('foo', 'Foo', 0).$this->matchRadio('foo2', 'Bar', 1));
+
+		$this->assertEquals($matcher, $radios);
+	}
+
 	public function testRepopulateFromModel()
 	{
 		$this->former->populate((object) array('foo' => 0));
